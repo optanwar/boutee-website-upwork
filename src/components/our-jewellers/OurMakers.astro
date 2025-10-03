@@ -1,0 +1,273 @@
+---
+import { Image } from "astro:assets";
+import cardImg from "../../assets/Image/jws-img.png";
+import cardImg1 from "../../assets/Image/jws-img-1.png";
+import cardImg2 from "../../assets/Image/jws-img-2.png";
+import cardImg3 from "../../assets/Image/jws-img-3.png";
+import cardImg4 from "../../assets/Image/jws-img-4.png";
+import cardImg5 from "../../assets/Image/jws-img-5.png";
+import cardImg6 from "../../assets/Image/jws-img-6.png";
+import cardImg7 from "../../assets/Image/jws-img-7.png";
+import cardImg8 from "../../assets/Image/jws-img-8.png";
+import cardImg9 from "../../assets/Image/jws-img-9.png";
+import cardImg10 from "../../assets/Image/jws-img-10.png";
+import cardImg11 from "../../assets/Image/jws-img-11.png";
+import cardImg12 from "../../assets/Image/jws-img-12.png";
+
+const jewellers = [
+  {
+    id: 1,
+    img: cardImg2,
+    name: "Ami Blastock",
+    location: "Kent",
+    bio: "Ami Blastock Jewellery",
+  },
+  {
+    id: 2,
+    img: cardImg3,
+    name: "Edward Xu",
+    location: "London",
+    bio: "EDXÚ",
+  },
+  {
+    id: 3,
+    img: cardImg4,
+    name: "Emma Mogridge",
+    location: "Devon",
+    bio: "Emma Mogridge Jewellery",
+  },
+  {
+    id: 4,
+    img: cardImg1,
+    name: "Caitriona Campbell",
+    location: "Belfast",
+    bio: "Aille Jewellery",
+  },
+  {
+    id: 5,
+    img: cardImg6,
+    name: "Marketa Garne",
+    location: "Cornwall",
+    bio: "Booblinka Jewellery",
+  },
+  {
+    id: 6,
+    img: cardImg,
+    name: "Charles Moreton",
+    location: "York",
+    bio: "Charles Alexander Jewellery",
+  },
+  {
+    id: 7,
+    img: cardImg7,
+    name: "Caroline Brook",
+    location: "Surrey",
+    bio: "Caroline Brook Jewellery",
+  },
+  {
+    id: 8,
+    img: cardImg9,
+    name: "Lindsay Forbes",
+    location: "Durham",
+    bio: "Laconic Jewellery",
+  },
+  {
+    id: 10,
+    img: cardImg10,
+    name: "Estelle Dévé",
+    location: "London",
+    bio: "Dévé",
+  },
+  {
+    id: 11,
+    img: cardImg11,
+    name: "Halina M. Hamalambo",
+    location: "Brighton",
+    bio: "Halina Mutinta Jewellery",
+  },
+  {
+    id: 12,
+    img: cardImg5,
+    name: "Halina M. Hamalambo",
+    location: "Brighton",
+    bio: "Halina Mutinta Jewellery",
+  },
+  {
+    id: 13,
+    img: cardImg12,
+    name: "Bryony Wong",
+    location: "London",
+    bio: "Bryony Wong",
+  },
+];
+---
+
+<section class="lg:py-[112px] py-[48px]">
+  <div class="max-w-screen-2xl lg:px-20 px-[24px] mx-auto">
+    <!-- Heading -->
+    <div
+      class="text-center lg:mb-[80px] mb-[24px] max-w-[768px] mx-auto overflow-hidden"
+    >
+      <h3
+        data-aos="fade-up"
+        class="lg:text-[52px] text-center text-[32px] md:text-[28px] leading-[36px] lg:leading-[56px] font-black text-textPrimary font-ppradio m-0"
+      >
+        Meet some of our talented makers
+      </h3>
+      <p
+        class="lg:text-[20px] text-[18px] lg:leading-[24px] leading-[22px] text-textSecondary font-figtree text-center mt-[16px]"
+      >
+        They bring the craftsmanship. You bring the vision.
+      </p>
+    </div>
+
+    <!-- 3 Column Layout -->
+    <div
+      class="grid lg:gap-[32px] gap-[20px] md:grid-cols-1 lg:grid-cols-3 jws-card relative"
+    >
+      <!-- Left Column -->
+
+      <div
+        id=""
+        class="scrollContainer overflow-hidden relative"
+        data-direction="up"
+      >
+        <div id="" class="scrollContent flex flex-col space-y-4">
+          {
+            [...jewellers] // make a shallow copy so original stays intact
+              .sort(() => Math.random() - 0.5) // shuffle array randomly
+              .map((item) => (
+                <div class="flex items-center gap-4 rounded-[16px] acd-shadow">
+                  <Image
+                    src={item.img}
+                    class="w-[126px] md:h-[132px] h-[110px] lg:rounded-[20px] rounded-[16px] object-cover"
+                    alt="user-img"
+                  />
+                  <div>
+                    <h3 class="font-bold text-[18px] lg:text-[20px] text-textPrimary font-figtree">
+                      {item.name}
+                    </h3>
+                    <p class="text-[16px] lg:text-[18px] text-textSecondary font-figtree">
+                      {item.location}
+                    </p>
+                    <p class="text-[16px] lg:text-[18px] text-textPrimary mt-[16px] font-figtree">
+                      {item.bio}
+                    </p>
+                  </div>
+                </div>
+              ))
+          }
+        </div>
+      </div>
+      <!-- Middle Column -->
+
+      <div
+        id="scrollContainer"
+        class="scrollContainer hidden lg:block overflow-hidden relative"
+        data-direction="down"
+      >
+        <div
+          id="scrollContent"
+          class="scrollContent flex flex-col lg:space-y-[24px] space-y-[20px]"
+        >
+          {
+            [...jewellers] // make a shallow copy so original stays intact
+              .sort(() => Math.random() - 0.8) // shuffle array randomly
+              .map((item) => (
+                <div class="flex items-center gap-4 rounded-[16px] acd-shadow">
+                  <Image
+                    src={item.img}
+                    class="w-[126px] md:h-[132px] h-[110px] lg:rounded-[20px] rounded-[16px] object-cover"
+                    alt="user-img"
+                  />
+                  <div>
+                    <h3 class="font-bold text-[18px] lg:text-[20px] text-textPrimary font-figtree">
+                      {item.name}
+                    </h3>
+                    <p class="text-[16px] lg:text-[18px] text-textSecondary font-figtree">
+                      {item.location}
+                    </p>
+                    <p class="text-[16px] lg:text-[18px] text-textPrimary mt-[16px] font-figtree">
+                      {item.bio}
+                    </p>
+                  </div>
+                </div>
+              ))
+          }
+        </div>
+      </div>
+
+      <!-- Right Column -->
+
+      <div
+        class="scrollContainer overflow-hidden relative hidden lg:block"
+        data-direction="up"
+      >
+        <div
+          class="scrollContent flex flex-col lg:space-y-[24px] space-y-[20px]"
+        >
+          {
+            [...jewellers] // make a shallow copy so original stays intact
+              .sort(() => Math.random() - 0.3) // shuffle array randomly
+              .map((item) => (
+                <div class="flex items-center gap-4 rounded-[16px] acd-shadow">
+                  <Image
+                    src={item.img}
+                    class="w-[126px] md:h-[132px] h-[110px] lg:rounded-[20px] rounded-[16px] object-cover"
+                    alt="user-img"
+                  />
+                  <div>
+                    <h3 class="font-bold text-[18px] lg:text-[20px] text-textPrimary font-figtree">
+                      {item.name}
+                    </h3>
+                    <p class="text-[16px] lg:text-[18px] text-textSecondary font-figtree">
+                      {item.location}
+                    </p>
+                    <p class="text-[16px] lg:text-[18px] text-textPrimary mt-[16px] font-figtree">
+                      {item.bio}
+                    </p>
+                  </div>
+                </div>
+              ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    const containers = document.querySelectorAll(".scrollContainer");
+
+    containers.forEach((container) => {
+      const content = container.querySelector(".scrollContent");
+
+      // Duplicate cards for seamless scroll
+      content.innerHTML += content.innerHTML;
+
+      // Dynamically set container height = 4 cards
+      const cardHeight = content.children[0].offsetHeight;
+      const gap = parseInt(getComputedStyle(content).gap) || 16;
+      container.style.height = cardHeight * 4 + gap * 3 + "px";
+
+      // Direction control (default = down)
+      const direction = container.dataset.direction || "down"; // "up" or "down"
+      const speed = 0.3; // adjust as needed
+      let y = direction === "up" ? content.scrollHeight / 2 : 0;
+
+      function animateScroll() {
+        if (direction === "up") {
+          y -= speed;
+          if (y <= 0) y = content.scrollHeight / 2; // reset for seamless loop
+        } else {
+          y += speed;
+          if (y >= content.scrollHeight / 2) y = 0; // reset for seamless loop
+        }
+
+        container.scrollTop = y;
+        requestAnimationFrame(animateScroll);
+      }
+
+      requestAnimationFrame(animateScroll);
+    });
+  </script>
+</section>

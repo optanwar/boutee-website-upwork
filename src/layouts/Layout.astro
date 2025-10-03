@@ -1,0 +1,111 @@
+---
+import Navbar from "../components/common/Navbar.astro";
+import Footer from "../components/common/Footer.astro";
+import "aos/dist/aos.css";
+import "../styles/global.css";
+const { title = "Boutee - Home", description = "Find your perfect handcrafted ring by connecting directly with independent UK jewellers. Boutee helps you define your style, match with makers, and bring your ideas to life." } = Astro.props;
+import { VisualEditing } from "@sanity/astro/visual-editing";
+
+const visualEditingEnabled =
+  import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == "true";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/Logo.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body class="flex flex-col min-h-screen scroll-smooth">
+    <!-- Header -->
+    <Navbar />
+
+    <!-- Page Content -->
+    <main class="flex-1">
+      <slot />
+      <VisualEditing enabled={visualEditingEnabled} />
+    </main>
+
+
+    <!-- Footer -->
+    <Footer />
+
+    <!-- AOS init -->
+    <script>
+      import AOS from "aos";
+      AOS.init({
+        duration: 500, // ms
+        once: false,
+      });
+    </script>
+  </body>
+</html>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // 🔹 Spin Button Icons
+  const initSpinButtons = () => {
+    const buttons = document.querySelectorAll(".spinBtn");
+
+    buttons.forEach((btn) => {
+      const icon = btn.querySelector(".btnIcon");
+      if (!icon) return;
+
+      btn.addEventListener("click", () => {
+        icon.classList.remove("animate-spin-once");
+        // Force reflow to restart animation
+        void icon.offsetWidth;
+        icon.classList.add("animate-spin-once");
+      });
+    });
+  };
+
+  // 🔹 Floating Parallax for Hero
+  const initParallax = () => {
+    let ticking = false;
+
+    const updateParallax = () => {
+      document.querySelectorAll(".floating").forEach((el) => {
+        const speed = parseFloat(el.dataset.speed) || 0.3;
+        const offset = window.scrollY * speed * -0.4;
+        el.style.setProperty("--parallaxY", `${offset}px`);
+      });
+      ticking = false;
+    };
+
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    });
+  };
+
+  // 🔹 Intersection Observer Animations
+  const initIntersectionAnimations = () => {
+    const target = document.querySelector(".wrapper");
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          target.classList.toggle("animate", entry.isIntersecting);
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(target);
+  };
+
+  // Initialize all features
+  initSpinButtons();
+  initParallax();
+  initIntersectionAnimations();
+});
+</script>
+
