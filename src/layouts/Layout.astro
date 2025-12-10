@@ -51,9 +51,12 @@ const visualEditingEnabled =
     <Footer />
 
     <!-- AOS Init -->
-    <script type="module">
-      document.addEventListener("DOMContentLoaded", () => {
-        AOS.init({ duration: 500, once: false });
+
+        <script>
+      import AOS from "aos";
+      AOS.init({
+        duration: 500, // ms
+        once: false,
       });
     </script>
   </body>
