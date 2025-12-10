@@ -29,20 +29,23 @@ const { params } = Astro;
 
 const { data: post } = await loadQuery({
   query: `*[_type == "post" && slug.current == $slug][0]{
-    title,
-    description,
-    slug,
-    "author": author->{
-      _id,
-      name,
-      image,
-      profession
-    },
-    "mainImage": mainImage{ ..., "url": asset->url },
-    "categories": categories[]->{ _id, title },
-    publishedAt,
-    body
-  }`,
+  title,
+  description,
+  metaTitle,
+  metaDescription,
+  "ogImage": ogImage{ ..., "url": asset->url },
+  slug,
+  "author": author->{
+    _id,
+    name,
+    image,
+    profession
+  },
+  "mainImage": mainImage{ ..., "url": asset->url },
+  "categories": categories[]->{ _id, title },
+  publishedAt,
+  body
+}`,
   params,
 });
 
@@ -104,7 +107,9 @@ function calculateReadTime(content: any[]): string {
 }
 ---
 
-<BaseLayout title={`Boutee - ${post?.title || "Blog"}`}>
+<BaseLayout title={post?.metaTitle || post?.title || "Boutee Blog"}
+  description={post?.metaDescription || post?.description}
+  ogImage={post?.ogImage?.url || urlForImage(post?.mainImage)}>
   {
     post ? (
       <>
