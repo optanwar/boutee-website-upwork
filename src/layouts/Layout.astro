@@ -3,18 +3,11 @@ import Navbar from "../components/common/Navbar.astro";
 import Footer from "../components/common/Footer.astro";
 import "aos/dist/aos.css";
 import "../styles/global.css";
-
+const { title = "Boutee - Home", description = "Find your perfect handcrafted ring by connecting directly with independent UK jewellers. Boutee helps you define your style, match with makers, and bring your ideas to life." } = Astro.props;
 import { VisualEditing } from "@sanity/astro/visual-editing";
-import AOS from "aos";
-
-const {
-  title = "Boutee - Home",
-  description = "Find your perfect handcrafted ring by connecting directly with independent UK jewellers. Boutee helps you define your style, match with makers, and bring your ideas to life.",
-  ogImage = Astro.props.ogImage ? Astro.props.ogImage : "/Logo.svg" // ✅ SSR-safe fallback
-} = Astro.props;
 
 const visualEditingEnabled =
-  import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === "true";
+  import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == "true";
 ---
 
 <!doctype html>
@@ -22,37 +15,27 @@ const visualEditingEnabled =
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/Logo.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/svg+xml" href="/Logo.svg" />
     <meta name="generator" content={Astro.generator} />
-
     <title>{title}</title>
     <meta name="description" content={description} />
-
-    <!-- Open Graph / Social Meta -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
   </head>
-
   <body class="flex flex-col min-h-screen scroll-smooth">
+    <!-- Header -->
     <Navbar />
 
+    <!-- Page Content -->
     <main class="flex-1">
       <slot />
       <VisualEditing enabled={visualEditingEnabled} />
     </main>
 
+
+    <!-- Footer -->
     <Footer />
 
-    <!-- AOS Init -->
-
-        <script>
+    <!-- AOS init -->
+    <script>
       import AOS from "aos";
       AOS.init({
         duration: 500, // ms
@@ -62,26 +45,29 @@ const visualEditingEnabled =
   </body>
 </html>
 
-<!-- Additional frontend scripts -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-
-  // Spin button animation
+  // 🔹 Spin Button Icons
   const initSpinButtons = () => {
-    document.querySelectorAll(".spinBtn").forEach((btn) => {
+    const buttons = document.querySelectorAll(".spinBtn");
+
+    buttons.forEach((btn) => {
       const icon = btn.querySelector(".btnIcon");
       if (!icon) return;
+
       btn.addEventListener("click", () => {
         icon.classList.remove("animate-spin-once");
+        // Force reflow to restart animation
         void icon.offsetWidth;
         icon.classList.add("animate-spin-once");
       });
     });
   };
 
-  // Parallax effect
+  // 🔹 Floating Parallax for Hero
   const initParallax = () => {
     let ticking = false;
+
     const updateParallax = () => {
       document.querySelectorAll(".floating").forEach((el) => {
         const speed = parseFloat(el.dataset.speed) || 0.3;
@@ -90,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       ticking = false;
     };
+
     window.addEventListener("scroll", () => {
       if (!ticking) {
         window.requestAnimationFrame(updateParallax);
@@ -98,10 +85,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // Intersection animations
+  // 🔹 Intersection Observer Animations
   const initIntersectionAnimations = () => {
     const target = document.querySelector(".wrapper");
     if (!target) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -110,11 +98,14 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       { threshold: 0.3 }
     );
+
     observer.observe(target);
   };
 
+  // Initialize all features
   initSpinButtons();
   initParallax();
   initIntersectionAnimations();
 });
 </script>
+
