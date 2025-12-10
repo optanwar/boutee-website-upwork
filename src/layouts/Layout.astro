@@ -6,8 +6,10 @@ import "../styles/global.css";
 
 const {
   title = "Boutee - Home",
-  description = "Find your perfect handcrafted ring...",
-  ogImage = "../assets/Logo.svg"
+  description = "Find your perfect handcrafted ring by connecting directly with independent UK jewellers. Boutee helps you define your style, match with makers, and bring your ideas to life.",
+  ogImage = Astro.props.ogImage
+    ? Astro.props.ogImage
+    : "/Logo.svg" 
 } = Astro.props;
 
 import { VisualEditing } from "@sanity/astro/visual-editing";
@@ -26,8 +28,8 @@ const visualEditingEnabled =
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    
-    <!-- OG TAGS -->
+
+    <!-- 🟢 OG / Social Meta -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
@@ -48,62 +50,70 @@ const visualEditingEnabled =
 
     <Footer />
 
-    <!-- 🟢 AOS CDN (WORKS PERFECTLY ON VERCEL) -->
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <!-- AOS init -->
     <script>
+      import AOS from "aos";
       AOS.init({
         duration: 500,
         once: false,
       });
     </script>
-
-    <!-- 🟢 YOUR CUSTOM JS -->
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // SPIN BUTTONS
-        const buttons = document.querySelectorAll(".spinBtn");
-        buttons.forEach((btn) => {
-          const icon = btn.querySelector(".btnIcon");
-          if (!icon) return;
-
-          btn.addEventListener("click", () => {
-            icon.classList.remove("animate-spin-once");
-            void icon.offsetWidth;
-            icon.classList.add("animate-spin-once");
-          });
-        });
-
-        // PARALLAX
-        let ticking = false;
-        const updateParallax = () => {
-          document.querySelectorAll(".floating").forEach((el) => {
-            const speed = parseFloat(el.dataset.speed) || 0.3;
-            const offset = window.scrollY * speed * -0.4;
-            el.style.setProperty("--parallaxY", `${offset}px`);
-          });
-          ticking = false;
-        };
-        window.addEventListener("scroll", () => {
-          if (!ticking) {
-            window.requestAnimationFrame(updateParallax);
-            ticking = true;
-          }
-        });
-
-        // INTERSECTION ANIMATIONS
-        const target = document.querySelector(".wrapper");
-        if (target) {
-          const observer = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                target.classList.toggle("animate", entry.isIntersecting);
-              });
-            },
-            { threshold: 0.3 }
-          );
-          observer.observe(target);
-        }
-      });
-    </script>
   </body>
 </html>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const initSpinButtons = () => {
+    const buttons = document.querySelectorAll(".spinBtn");
+    buttons.forEach((btn) => {
+      const icon = btn.querySelector(".btnIcon");
+      if (!icon) return;
+
+      btn.addEventListener("click", () => {
+        icon.classList.remove("animate-spin-once");
+        void icon.offsetWidth;
+        icon.classList.add("animate-spin-once");
+      });
+    });
+  };
+
+  const initParallax = () => {
+    let ticking = false;
+    const updateParallax = () => {
+      document.querySelectorAll(".floating").forEach((el) => {
+        const speed = parseFloat(el.dataset.speed) || 0.3;
+        const offset = window.scrollY * speed * -0.4;
+        el.style.setProperty("--parallaxY", `${offset}px`);
+      });
+      ticking = false;
+    };
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    });
+  };
+
+  const initIntersectionAnimations = () => {
+    const target = document.querySelector(".wrapper");
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          target.classList.toggle("animate", entry.isIntersecting);
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(target);
+  };
+
+  initSpinButtons();
+  initParallax();
+  initIntersectionAnimations();
+});
+</script>
