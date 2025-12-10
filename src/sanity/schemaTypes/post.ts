@@ -58,12 +58,12 @@ export const postType = defineType({
     // ⭐ NEW SEO FIELDS ADDED HERE
     // -------------------------------------
     defineField({
-      name: "metaTitle",
+      name: "title",
       title: "Meta Title",
       type: "string",
     }),
     defineField({
-      name: "metaDescription",
+      name: "description",
       title: "Meta Description",
       type: "text", // short text
     }),

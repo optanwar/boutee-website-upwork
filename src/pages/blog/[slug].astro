@@ -107,9 +107,9 @@ function calculateReadTime(content: any[]): string {
 }
 ---
 
-<BaseLayout title={post?.metaTitle || post?.title || "Boutee Blog"}
-  description={post?.metaDescription || post?.description}
-  ogImage={post?.ogImage?.url || urlForImage(post?.mainImage)}>
+<BaseLayout title={post?.title || "Boutee Blog"}
+description={post?.description || post?.summary}
+ogImage={post?.ogImage ? urlForImage(post.ogImage) : urlForImage(post?.mainImage)}>
   {
     post ? (
       <>
